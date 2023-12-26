@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
+        <title>Codigos uteis</title>
+        <style>
+            .code-container {
+                position: relative;
+            }
+
+            .copy-button {
+                position: absolute;
+                top: 0;
+                right: 0;
+                background-color: #343a40;
+                color: #fff;
+                border: none;
+                padding: 5px 10px;
+                cursor: pointer;
+            }
+
+            .code {
+                background-color: rgb(245, 245, 245);
+                color: rgb(0, 0, 0);
+                padding: 2%;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="text-center mt-3">
+            <input type="text" id="searchInput" placeholder="Pesquisar...">
+            <button class="btn btn-primary" onclick="searchCode()">Pesquisar</button>
+        </div>
+
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="card p-3 text-center">
+                        <h2 >Codigo para validacao de senha</h2>
+                    <div class="d-flex justify-content-between">
+                        <p>valida se tem 8 caracteres</p>
+                        <p>Se tem letra maiuscula</p>
+                        <p>Se tem caracter especial</p>
+                    </div>
+                    </div>
+                    <div class="code-container code">
+                        <button class="copy-button" data-clipboard-target="#code2">Copy</button>
+                        <pre id="code2">
+                        <code class="language-javascript ">
+
+                            validatePassword(password, confirmed_password) {
+                                const regexUpperCase = /[A-Z]/;
+                                const regexSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/;
+
+                                if (password.length < 8) {
+                                    swal("A senha deve ter no mínimo 8 caracteres.");
+                                    this.length = false;
+                                    return false;
+                                } else if (!regexUpperCase.test(password)) {
+                                    swal("A senha deve conter pelo menos uma letra maiúscula.");
+                                    return false;
+                                } else if (!regexSpecialCharacter.test(password)) {
+                                    swal("A senha deve conter pelo menos um caractere especial.");
+                                    return false;
+                                } else {
+                                    return true;
+                                }
+                            }
+                        </code>
+                    </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="card p-3 text-center">
+                        <h1>Senha e confirmacao de senha </h1>
+                    </div>
+                   
+                    <div class="code-container code">
+                        <button class="copy-button" data-clipboard-target="#code3">Copy</button>
+                        <pre id="code3">
+                        <code class="language-javascript ">
+
+                         checkConfirmation() {
+
+                            let cont = this.checkPassword();
+
+                            if (this.user.password == this.user.confirmed_password) {
+                                this.equalPassword = true;
+                                cont++;
+                            } else {
+                                this.equalPassword = false;
+                            }
+
+                            },
+                        </code>
+                    </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="card p-3 text-center">
+                         <h2>Validacao de CNPJ</h2>
+                    </div>
+                    <div class="code-container code">
+                        <button class="copy-button" data-clipboard-target="#code4">Copy</button>
+                        <pre id="code4">
+                        <code class="language-javascript ">
+
+                            CNPJvalidation(campo, spam) {
+
+                                campo = campo.replace(/\D/g, '');
+                          
+                                if (campo.length !== 14 && campo != "") {
+                                  this.errorEvent(spam);
+                                  spam.innerHTML = "CNPJ não é valido";
+                                  return false;
+                                }
+                                if (/^(\d)\1+$/.test(campo)) {
+                                  this.errorEvent(spam);
+                                  spam.innerHTML = "CNPJ não é valido";
+                                  return false;
+                                }
+                                let soma = 0;
+                                let peso = 2;
+                                for (let i = 11; i >= 0; i--) {
+                                  soma += parseInt(campo.charAt(i)) * peso;
+                                  peso = peso === 9 ? 2 : peso + 1;
+                                }
+                                let digitoVerificador = (soma % 11 < 2) ? 0 : 11 - (soma % 11);
+                                if (parseInt(campo.charAt(12)) !== digitoVerificador) {
+                                  this.errorEvent(spam);
+                                  spam.innerHTML = "CNPJ não é valido";
+                                  return false;
+                                }
+                          
+                                soma = 0;
+                                peso = 2;
+                                for (let i = 12; i >= 0; i--) {
+                                  soma += parseInt(campo.charAt(i)) * peso;
+                                  peso = peso === 9 ? 2 : peso + 1;
+                                }
+                                digitoVerificador = (soma % 11 < 2) ? 0 : 11 - (soma % 11);
+                                if (parseInt(campo.charAt(13)) !== digitoVerificador) {
+                          
+                                  this.errorEvent(spam);
+                                  spam.innerHTML = "CNPJ não é valido";
+                                  return false;
+                                }
+                          
+                                return true;
+                              },
+                        </code>
+                    </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="card p-3 text-center">
+                         <h2>Efeito de Datilografia</h2>
+                         <p>voce precisara setar uma variavel no data.</p>
+                         <p>colocar a funcao no mounted </p>
+                         <p>e o codigo funcionara normalmente</p>
+                    </div>
+                    <div class="code-container code">
+                        <button class="copy-button" data-clipboard-target="#code5">Copy</button>
+                        <pre id="code5">
+                        <code class="language-javascript ">
+                            <span>{{ welcomeText }}</span>
+                            typeWriterEffect() {
+                                const text = "Seja Bem Vindo!";
+                                let i = 0;
+                                const speed = 100; 
+                            
+                                const timer = setInterval(() => {
+                                  if (i < text.length) {
+                                    this.welcomeText += text.charAt(i);
+                                    i++;
+                                  } else {
+                                    clearInterval(timer);
+                                  }
+                                }, speed);
+                              },
+
+                        </code>
+                    </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                new ClipboardJS('.copy-button');
+            });
+
+            function searchCode() {
+                var searchInput = document.getElementById("searchInput").value.toLowerCase();
+                var elements = document.querySelectorAll('*:not(script):not(style)');
+
+                // Limpar destaques anteriores
+                elements.forEach(function (element) {
+                    var originalHtml = element.getAttribute("data-original-html");
+                    if (originalHtml) {
+                        element.innerHTML = originalHtml;
+                    }
+                });
+
+                // Se a barra de pesquisa estiver vazia, não é necessário continuar
+                if (!searchInput.trim()) {
+                    return;
+                }
+
+                elements.forEach(function (element) {
+                    var originalHtml = element.innerHTML;
+                    var regex = new RegExp(searchInput, 'gi');
+                    var match = element.innerText.match(regex);
+
+                    if (match) {
+                        var highlightedText = originalHtml.replace(regex, match =>
+                            `<span style="background-color: yellow;">${match}</span>`);
+                        element.innerHTML = highlightedText;
+                        element.setAttribute("data-original-html", originalHtml);
+                        element.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            }
+        </script>
+    </body>
+
+</html>
