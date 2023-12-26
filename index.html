@@ -208,46 +208,73 @@
                 </div>
             </div>
         </div>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                new ClipboardJS('.copy-button');
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="card p-3 text-center">
+                         <h2>Retirar preenchimento automatico e-mail e senha </h2>
+                         <p>Quando vamos criar o navegador preenche senha e e-mail o que nao faz sentido</p>
+                    </div>
+                    <div class="code-container code">
+                        <button class="copy-button" data-clipboard-target="#code6">Copy</button>
+                        <pre id="code6">
+                        <code class="language-javascript ">
+                            loadMessage() {
+                                let senha = document.getElementById("senhaCliente");
+                                let email = document.getElementById("emailCliente");
+                                let confirmaSenha = document.getElementById("confirmacaoemailCliente");
+                            
+                                senha.removeAttribute("readonly");
+                                email.removeAttribute("readonly");
+                                confirmaSenha.removeAttribute("readonly");
+                            },
+
+                        </code>
+                    </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+    </body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new ClipboardJS('.copy-button');
+        });
+
+        function searchCode() {
+            var searchInput = document.getElementById("searchInput").value.toLowerCase();
+            var elements = document.querySelectorAll('*:not(script):not(style)');
+
+            // Limpar destaques anteriores
+            elements.forEach(function (element) {
+                var originalHtml = element.getAttribute("data-original-html");
+                if (originalHtml) {
+                    element.innerHTML = originalHtml;
+                }
             });
 
-            function searchCode() {
-                var searchInput = document.getElementById("searchInput").value.toLowerCase();
-                var elements = document.querySelectorAll('*:not(script):not(style)');
-
-                // Limpar destaques anteriores
-                elements.forEach(function (element) {
-                    var originalHtml = element.getAttribute("data-original-html");
-                    if (originalHtml) {
-                        element.innerHTML = originalHtml;
-                    }
-                });
-
-                // Se a barra de pesquisa estiver vazia, não é necessário continuar
-                if (!searchInput.trim()) {
-                    return;
-                }
-
-                elements.forEach(function (element) {
-                    var originalHtml = element.innerHTML;
-                    var regex = new RegExp(searchInput, 'gi');
-                    var match = element.innerText.match(regex);
-
-                    if (match) {
-                        var highlightedText = originalHtml.replace(regex, match =>
-                            `<span style="background-color: yellow;">${match}</span>`);
-                        element.innerHTML = highlightedText;
-                        element.setAttribute("data-original-html", originalHtml);
-                        element.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
+            // Se a barra de pesquisa estiver vazia, não é necessário continuar
+            if (!searchInput.trim()) {
+                return;
             }
-        </script>
-    </body>
 
+            elements.forEach(function (element) {
+                var originalHtml = element.innerHTML;
+                var regex = new RegExp(searchInput, 'gi');
+                var match = element.innerText.match(regex);
+
+                if (match) {
+                    var highlightedText = originalHtml.replace(regex, match =>
+                        `<span style="background-color: yellow;">${match}</span>`);
+                    element.innerHTML = highlightedText;
+                    element.setAttribute("data-original-html", originalHtml);
+                    element.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        }
+    </script>
 </html>
